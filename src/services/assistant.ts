@@ -20,7 +20,7 @@ const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u
 function period(txs: Transaction[]): string {
   if (!txs.length) return "nenhum registro";
   const dates = txs.map((t) => t.date).sort();
-  return `${formatDate(dates[0])} a ${formatDate(dates[dates.length - 1])}`;
+  return `${formatDate(dates[0]!)} a ${formatDate(dates[dates.length - 1]!)}`;
 }
 
 function meta(txs: Transaction[]): Block {
