@@ -83,10 +83,10 @@ function Chat() {
       <main className="flex-1 overflow-y-auto">
         <div className="mx-auto flex max-w-3xl flex-col gap-4 px-4 py-5">
           {msgs.map((m) => (
-            <div key={m.id} className={m.role === "user" ? "flex justify-end" : "flex"}>
+            <div key={m.id} className={m.role === "user" ? "flex min-w-0 justify-end" : "flex min-w-0"}>
               <div className={m.role === "user"
                 ? "max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-sm bg-primary px-4 py-2.5 text-primary-foreground"
-                : `w-full max-w-full space-y-3 rounded-2xl rounded-bl-sm border bg-card px-4 py-3 ${m.error ? "border-destructive text-destructive" : ""}`}>
+                : `min-w-0 w-full max-w-full space-y-3 rounded-2xl rounded-bl-sm border bg-card px-4 py-3 ${m.error ? "border-destructive text-destructive" : ""}`}>
                 {m.blocks.map((b, i) => <BlockView key={i} b={b} />)}
               </div>
             </div>
@@ -147,7 +147,20 @@ function BlockView({ b }: { b: Block }) {
       </div>
     );
   return (
-    <div className="overflow-x-auto rounded-lg border">
+    <>
+      <div className="grid min-w-0 gap-2 sm:hidden">
+        {(b.mobileRows ?? b.rows).map((row, i) => (
+          <dl key={i} className="min-w-0 rounded-lg border bg-secondary p-3 text-sm">
+            {(b.mobileHeaders ?? b.headers).map((header, j) => (
+              <div key={header} className="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-3 py-1">
+                <dt className="min-w-0 text-muted-foreground">{header}</dt>
+                <dd className="min-w-0 break-words text-right font-medium tabular-nums">{row[j]}</dd>
+              </div>
+            ))}
+          </dl>
+        ))}
+      </div>
+    <div className="hidden overflow-x-auto rounded-lg border sm:block">
       <table className="w-full text-sm">
         <thead className="bg-secondary text-left">
           <tr>{b.headers.map((h) => <th key={h} className="whitespace-nowrap px-3 py-2 font-medium">{h}</th>)}</tr>
@@ -159,5 +172,6 @@ function BlockView({ b }: { b: Block }) {
         </tbody>
       </table>
     </div>
+    </>
   );
 }

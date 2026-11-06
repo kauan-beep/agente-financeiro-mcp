@@ -28,3 +28,5 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Keep response data and calculations in the replaceable assistant/finance services; table blocks may provide complete mobile transaction rows separately to preserve desktop columns.
